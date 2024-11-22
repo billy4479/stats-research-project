@@ -72,9 +72,27 @@
           ]
         );
 
+        rWithPkgs = pkgs.rWrapper.override {
+          packages = with pkgs.rPackages; [
+            languageserver
+          ];
+        };
+
+        pyPkgs = pkgs.python3.withPackages (
+          python-pkgs: with python-pkgs; [
+            # select Python packages here
+            pandas
+            requests
+          ]
+        );
+
         nativeBuildInputs =
           (with pkgs; [
             texPkgs
+            rWithPkgs
+            pyPkgs
+
+            ruff
 
             # `minted` dependencies
             python3
