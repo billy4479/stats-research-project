@@ -1,4 +1,4 @@
-What university do you attend?,Age,Do you consider yourself a commuter?,How much time does it take you to reach your university?,What percentage of lessons you attend?,What's your GPA (out of 30)?,Did you move to a different city to attend university?,Which means of transport do you use to commute to university?,Do you think that commuting has a negative influence on your studies?,I have too little time to study,I think I would have a higher GPA if I were to live closer to the university,I don't have enough time to dedicate to my hobbies/doing sports,Going to university is stressful,I don't get enough sleep ,It's difficult to find the time to see my friends,It's difficult to spend some time with my family,Sometimes I feel lonely
+university,age,is_commuter,commute_time,attendance,gpa,did_move,means_of_transport,think_commuting_negative_on_studies,no_study_time,higher_gpa_if_closer,no_hobbies,stress,no_sleep,no_friends,no_family,loneliness
 bocconi,20,0,0.0,1.0,0.87,1,,-1.0,0.33,0.33,0.33,0.33,0.33,0.33,0.33,0.33
 bocconi,20,0,0.0,0.67,0.99,1,,-1.0,0.78,0.78,0.78,0.78,0.78,0.78,0.78,0.78
 bocconi,20,0,0.0,1.0,0.97,1,,-1.0,0.11,0.11,0.11,0.11,0.11,0.11,0.11,0.11

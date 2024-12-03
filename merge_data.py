@@ -223,6 +223,26 @@ with open("data/Stats Research Project (Risposte) - Italian form.csv") as csv_fi
 
 with open("data/merged.csv", mode="w+") as result:
     writer = csv.writer(result)
+    header = [
+        "time",
+        "university",
+        "age",
+        "is_commuter",
+        "commute_time",
+        "attendance",
+        "gpa",
+        "did_move",
+        "means_of_transport",
+        "think_commuting_negative_on_studies",
+        "no_study_time",
+        "higher_gpa_if_closer",
+        "no_hobbies",
+        "stress",
+        "no_sleep",
+        "no_friends",
+        "no_family",
+        "loneliness",
+    ]
     writer.writerow(header[1:])
     writer.writerows(rows_en)
     writer.writerows(rows_it)
