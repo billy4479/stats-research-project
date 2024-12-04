@@ -81,7 +81,7 @@ with open("data/Stats Research Project (Risposte) - English form.csv") as csv_fi
 
         try:
             gpa = float(data[6].strip().split("/")[0].replace(",", "."))
-            row.append((gpa - 1) / 30)
+            row.append(gpa)
         except Exception:
             row.append(-1)
 
@@ -172,7 +172,7 @@ with open("data/Stats Research Project (Risposte) - Italian form.csv") as csv_fi
 
         try:
             gpa = float(data[6].strip().split("/")[0].replace(",", "."))
-            row.append((gpa - 1) / 30)
+            row.append(gpa)
         except Exception:
             row.append(-1)
 
