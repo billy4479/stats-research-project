@@ -1,5 +1,5 @@
 import csv
-from pprint import pp
+# from pprint import pp
 
 header = []
 rows_en = []
@@ -48,7 +48,7 @@ with open("data/Stats Research Project (Risposte) - English form.csv") as csv_fi
         row.append(map_unis(data[1]))  # university
         row.append(int(data[2].strip().split(" ")[0]))  # age
 
-        commuter = 1 if data[3] == "Yes" else 0
+        commuter = data[3]
         row.append(commuter)
 
         timeScore = (
@@ -83,10 +83,10 @@ with open("data/Stats Research Project (Risposte) - English form.csv") as csv_fi
             gpa = float(data[6].strip().split("/")[0].replace(",", "."))
             row.append(gpa)
         except Exception:
-            row.append(-1)
+            row.append("N/A")
 
         # Part 2 - non commuters
-        moved = 1 if data[7] == "Yes" else 0
+        moved = data[7]
         row.append(moved)
 
         # Part 3 - commuters
@@ -102,26 +102,26 @@ with open("data/Stats Research Project (Risposte) - English form.csv") as csv_fi
         study = int(data[10])
         row.append((study - 1) / 9)
 
-        higherGPA = int(data[10])
+        higherGPA = int(data[11])
         row.append((higherGPA - 1) / 9)
 
         # Part 4
-        hobbies = int(data[10])
+        hobbies = int(data[12])
         row.append((hobbies - 1) / 9)
 
-        stress = int(data[10])
+        stress = int(data[13])
         row.append((stress - 1) / 9)
 
-        sleep = int(data[10])
+        sleep = int(data[14])
         row.append((sleep - 1) / 9)
 
-        friends = int(data[10])
+        friends = int(data[15])
         row.append((friends - 1) / 9)
 
-        family = int(data[10])
+        family = int(data[16])
         row.append((family - 1) / 9)
 
-        loneliness = int(data[10])
+        loneliness = int(data[17])
         row.append((loneliness - 1) / 9)
 
         for i, v in enumerate(row):
@@ -139,7 +139,7 @@ with open("data/Stats Research Project (Risposte) - Italian form.csv") as csv_fi
         row.append(map_unis(data[1]))  # university
         row.append(int(data[2].strip().split(" ")[0]))  # age
 
-        commuter = 1 if data[3] == "Si" else 0
+        commuter = "Yes" if data[3] == "Si" else "No"
         row.append(commuter)
 
         timeScore = (
@@ -174,10 +174,10 @@ with open("data/Stats Research Project (Risposte) - Italian form.csv") as csv_fi
             gpa = float(data[6].strip().split("/")[0].replace(",", "."))
             row.append(gpa)
         except Exception:
-            row.append(-1)
+            row.append("N/A")
 
         # Part 2 - non commuters
-        moved = 1 if data[7] == "Si" else 0
+        moved = "Yes" if data[7] == "Si" else "No"
         row.append(moved)
 
         # Part 3 - commuters
@@ -193,26 +193,26 @@ with open("data/Stats Research Project (Risposte) - Italian form.csv") as csv_fi
         study = int(data[10])
         row.append((study - 1) / 9)
 
-        higherGPA = int(data[10])
+        higherGPA = int(data[11])
         row.append((higherGPA - 1) / 9)
 
         # Part 4
-        hobbies = int(data[10])
+        hobbies = int(data[12])
         row.append((hobbies - 1) / 9)
 
-        stress = int(data[10])
+        stress = int(data[13])
         row.append((stress - 1) / 9)
 
-        sleep = int(data[10])
+        sleep = int(data[14])
         row.append((sleep - 1) / 9)
 
-        friends = int(data[10])
+        friends = int(data[15])
         row.append((friends - 1) / 9)
 
-        family = int(data[10])
+        family = int(data[16])
         row.append((family - 1) / 9)
 
-        loneliness = int(data[10])
+        loneliness = int(data[17])
         row.append((loneliness - 1) / 9)
 
         for i, v in enumerate(row):
@@ -248,4 +248,4 @@ with open("data/merged.csv", mode="w+") as result:
     writer.writerows(rows_it)
 
 
-pp(uni_map)
+# pp(uni_map)
