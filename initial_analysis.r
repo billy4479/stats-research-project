@@ -45,3 +45,35 @@ ggplot(filtered_non_commuters, aes(x = gpa)) +
   ylab('Frequency') +
   theme_minimal() +
   theme(plot.title = element_text(hjust = 0.5))
+
+#Histogram for mean indices of life quality (Commuters)
+filtered_data <- filter(data, is_commuter == 1)
+filtered_columns <- filtered_data[, c("no_study_time", "no_hobbies", "stress", "no_sleep", "no_family", "no_friends", "loneliness")]
+
+for (index in colnames(filtered_columns)) {
+  xlim_range <- range(filtered_columns[[index]], na.rm = TRUE)
+  plot <- ggplot(filtered_columns, aes_string(x = index)) +  
+    geom_histogram(bins = 15, alpha = 0.5, fill = "green", color = "black") +
+    geom_density(aes(y = ..density..), color = "red") + 
+    xlim(xlim_range) +  # Set xlim based on data range
+    ggtitle(paste("Histogram of", index, "for Commuters")) +  
+    xlab(index) +  
+    ylab('Frequency') + 
+    theme_minimal() + 
+    theme(plot.title = element_text(hjust = 0.5)) 
+  print(plot)
+}
+
+# Means for life indices
+selected_columns <- c("no_study_time", "no_hobbies", "stress", "no_sleep", "no_family", "no_friends", "loneliness")
+data$row_mean <- rowMeans(data[, selected_columns], na.rm = TRUE)
+result <- data[, c(selected_columns, "row_mean")]
+head(result)
+
+#Boxplot of mean life indices for commuters
+boxplot(row_mean ~ is_commuter,
+        data = data[!is.na(data$row_mean), ],
+        names = c("non commuter", "commuters"),
+        xlab = "is_commuter",
+        ylab = "gpa"
+)
