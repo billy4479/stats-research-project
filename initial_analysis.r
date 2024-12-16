@@ -55,7 +55,7 @@ for (index in colnames(filtered_columns)) {
   plot <- ggplot(filtered_columns, aes_string(x = index)) +  
     geom_histogram(bins = 15, alpha = 0.5, fill = "green", color = "black") +
     geom_density(aes(y = ..density..), color = "red") + 
-    xlim(xlim_range) +  # Set xlim based on data range
+    xlim(xlim_range) +  
     ggtitle(paste("Histogram of", index, "for Commuters")) +  
     xlab(index) +  
     ylab('Frequency') + 
@@ -73,7 +73,7 @@ for (index in colnames(filtered_columns)) {
   plot <- ggplot(filtered_columns, aes_string(x = index)) +  
     geom_histogram(bins = 15, alpha = 0.5, fill = "green", color = "black") +
     geom_density(aes(y = ..density..), color = "red") + 
-    xlim(xlim_range) +  # Set xlim based on data range
+    xlim(xlim_range) +  
     ggtitle(paste("Histogram of", index, "for Non-commuters")) +  
     xlab(index) +  
     ylab('Frequency') + 
