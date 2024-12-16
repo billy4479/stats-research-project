@@ -49,36 +49,34 @@ ggplot(filtered_non_commuters, aes(x = gpa)) +
 #Histogram for mean indices of life quality (Commuters)
 filtered_data <- filter(data, is_commuter == 1)
 filtered_columns <- filtered_data[, c("no_study_time", "no_hobbies", "stress", "no_sleep", "no_family", "no_friends", "loneliness")]
-
 for (index in colnames(filtered_columns)) {
   xlim_range <- range(filtered_columns[[index]], na.rm = TRUE)
-  plot <- ggplot(filtered_columns, aes_string(x = index)) +  
+  plot <- ggplot(filtered_columns, aes(x = !!sym(index))) +  
     geom_histogram(bins = 15, alpha = 0.5, fill = "green", color = "black") +
     geom_density(aes(y = ..density..), color = "red") + 
-    xlim(xlim_range) +  
-    ggtitle(paste("Histogram of", index, "for Commuters")) +  
+    xlim(xlim_range[1], xlim_range[2]) +  # Ensure xlim works with the range vector
+    ggtitle(paste("Histogram of", index, "for Non-commuters")) +  
     xlab(index) +  
     ylab('Frequency') + 
     theme_minimal() + 
-    theme(plot.title = element_text(hjust = 0.5)) 
+    theme(plot.title = element_text(hjust = 0.5))
   print(plot)
 }
 
 #Histogram for mean indices of life quality (Non-commuters)
 filtered_data <- filter(data, is_commuter == 0)
 filtered_columns <- filtered_data[, c("no_study_time", "no_hobbies", "stress", "no_sleep", "no_family", "no_friends", "loneliness")]
-
 for (index in colnames(filtered_columns)) {
   xlim_range <- range(filtered_columns[[index]], na.rm = TRUE)
-  plot <- ggplot(filtered_columns, aes_string(x = index)) +  
+  plot <- ggplot(filtered_columns, aes(x = !!sym(index))) +  
     geom_histogram(bins = 15, alpha = 0.5, fill = "green", color = "black") +
     geom_density(aes(y = ..density..), color = "red") + 
-    xlim(xlim_range) +  
+    xlim(xlim_range[1], xlim_range[2]) +  # Ensure xlim works with the range vector
     ggtitle(paste("Histogram of", index, "for Non-commuters")) +  
     xlab(index) +  
     ylab('Frequency') + 
     theme_minimal() + 
-    theme(plot.title = element_text(hjust = 0.5)) 
+    theme(plot.title = element_text(hjust = 0.5))
   print(plot)
 }
 
