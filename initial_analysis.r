@@ -64,6 +64,24 @@ for (index in colnames(filtered_columns)) {
   print(plot)
 }
 
+#Histogram for mean indices of life quality (Non-commuters)
+filtered_data <- filter(data, is_commuter == 0)
+filtered_columns <- filtered_data[, c("no_study_time", "no_hobbies", "stress", "no_sleep", "no_family", "no_friends", "loneliness")]
+
+for (index in colnames(filtered_columns)) {
+  xlim_range <- range(filtered_columns[[index]], na.rm = TRUE)
+  plot <- ggplot(filtered_columns, aes_string(x = index)) +  
+    geom_histogram(bins = 15, alpha = 0.5, fill = "green", color = "black") +
+    geom_density(aes(y = ..density..), color = "red") + 
+    xlim(xlim_range) +  # Set xlim based on data range
+    ggtitle(paste("Histogram of", index, "for Non-commuters")) +  
+    xlab(index) +  
+    ylab('Frequency') + 
+    theme_minimal() + 
+    theme(plot.title = element_text(hjust = 0.5)) 
+  print(plot)
+}
+
 # Means for life indices
 selected_columns <- c("no_study_time", "no_hobbies", "stress", "no_sleep", "no_family", "no_friends", "loneliness")
 data$row_mean <- rowMeans(data[, selected_columns], na.rm = TRUE)
