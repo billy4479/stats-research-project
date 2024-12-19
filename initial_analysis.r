@@ -54,7 +54,7 @@ for (index in colnames(filtered_columns)) {
   plot <- ggplot(filtered_columns, aes(x = !!sym(index))) +  
     geom_histogram(bins = 15, alpha = 0.5, fill = "green", color = "black") +
     geom_density(aes(y = ..density..), color = "red") + 
-    xlim(xlim_range[1], xlim_range[2]) +  # Ensure xlim works with the range vector
+    xlim(xlim_range[1], xlim_range[2]) +  
     ggtitle(paste("Histogram of", index, "for Non-commuters")) +  
     xlab(index) +  
     ylab('Frequency') + 
@@ -69,9 +69,9 @@ filtered_columns <- filtered_data[, c("no_study_time", "no_hobbies", "stress", "
 for (index in colnames(filtered_columns)) {
   xlim_range <- range(filtered_columns[[index]], na.rm = TRUE)
   plot <- ggplot(filtered_columns, aes(x = !!sym(index))) +  
-    geom_histogram(bins = 15, alpha = 0.5, fill = "green", color = "black") +
+    geom_histogram(bins = 15, alpha = 0.5, fill = "purple", color = "black") +
     geom_density(aes(y = ..density..), color = "red") + 
-    xlim(xlim_range[1], xlim_range[2]) +  # Ensure xlim works with the range vector
+    xlim(xlim_range[1], xlim_range[2]) + 
     ggtitle(paste("Histogram of", index, "for Non-commuters")) +  
     xlab(index) +  
     ylab('Frequency') + 
@@ -93,3 +93,28 @@ boxplot(row_mean ~ is_commuter,
         xlab = "is_commuter",
         ylab = "gpa"
 )
+
+#Checking normality of variables: commuters_gpa and noncommuters_gpa
+commuters_gpa <- data$gpa[data$is_commuter == 1]
+non_commuters_gpa <- data$gpa[data$is_commuter == 0]
+shapiro.test(commuters_gpa)
+shapiro.test(non_commuters_gpa)
+
+#Permorming Wicoxon test since Shapiro test showed the GPA distribution for commuters was not normal
+#Testing the null hypothesis "Commuters have a lower GPA than non-commuters":
+wilcox_test_result <- wilcox.test(commuters_gpa, non_commuters_gpa, 
+                                  alternative = "less") 
+print(wilcox_test_result)
+
+#Anova to test "More time commuting implies lower GPA":
+data$commute_time_group <- as.factor(data$commute_time)  
+data <- filter(data, commute_time > 0) 
+boxplot(gpa ~ commute_time_group, data = data,
+            xlab = "Commute Time Group",
+            ylab = "GPA",
+            main = "GPA by Commute Time Group",
+            col = c("skyblue", "lightgreen", "pink"))
+anova_result <- aov(gpa ~ commute_time_group, data = data)
+summary(anova_result)
+
+
