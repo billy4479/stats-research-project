@@ -94,6 +94,64 @@ boxplot(row_mean ~ is_commuter,
         ylab = "gpa"
 )
 
+#Pie charts
+commute_summary <- data.frame(
+  group = c("Non-Commuters", "Commuters"),
+  value = c(n_non_commuters, n_commuters)
+)
+commute_summary$fraction <- commute_summary$value / sum(commute_summary$value)
+commute_summary$label <- paste0(commute_summary$group, " (", round(commute_summary$fraction * 100), "%)")
+
+ggplot(commute_summary, aes(x = "", y = fraction, fill = group)) +
+  geom_bar(width = 1, stat = "identity") +
+  coord_polar(theta = "y") +
+  labs(title = "Percentage of Non-Commuters") +
+  theme_void() + 
+  theme(legend.position = "right") +
+  geom_text(aes(label = label), position = position_stack(vjust = 0.5))
+
+#Commuters
+n_10 <- sum(data$commute_time == 0.00 & data$is_commuter==1)
+n_30 <- sum(data$commute_time == 0.25 & data$is_commuter==1)
+n_1 <- sum(data$commute_time == 0.50 & data$is_commuter==1)
+n_1.5 <- sum(data$commute_time == 0.75 & data$is_commuter==1)
+n_2 <- sum(data$commute_time == 1.00 & data$is_commuter==1)
+commute_time_summary <- data.frame(
+  group = c("Less than 10 min.", "10-30 min.", "30 min. to 1 hour", "1 hour to 1.5 hours", "More than 2 hours"),
+  value = c(n_10, n_30, n_1, n_1.5,n_2)
+)
+commute_time_summary$fraction <- commute_time_summary$value / sum(commute_summary$value)
+commute_time_summary$label <- paste0(commute_time_summary$group, " (", round(commute_time_summary$fraction * 100), "%)")
+
+ggplot(commute_time_summary, aes(x = "", y = fraction, fill = group)) +
+  geom_bar(width = 1, stat = "identity") +
+  coord_polar(theta = "y") +
+  labs(title = "Percentage of commuting times for Commuters") +
+  theme_void() + 
+  theme(legend.position = "right") +
+  geom_text(aes(label = label), position = position_stack(vjust = 0.5))
+
+#Non-commuters
+n_10 <- sum(data$commute_time == 0.00 & data$is_commuter==0)
+n_30 <- sum(data$commute_time == 0.25 & data$is_commuter==0)
+n_1 <- sum(data$commute_time == 0.50 & data$is_commuter==0)
+n_1.5 <- sum(data$commute_time == 0.75 & data$is_commuter==0)
+n_2 <- sum(data$commute_time == 1.00 & data$is_commuter==0)
+commute_time_summary <- data.frame(
+  group = c("Less than 10 min.", "10-30 min.", "30 min. to 1 hour", "1 hour to 1.5 hours", "More than 2 hours"),
+  value = c(n_10, n_30, n_1, n_1.5,n_2)
+)
+commute_time_summary$fraction <- commute_time_summary$value / sum(commute_summary$value)
+commute_time_summary$label <- paste0(commute_time_summary$group, " (", round(commute_time_summary$fraction * 100), "%)")
+
+ggplot(commute_time_summary, aes(x = "", y = fraction, fill = group)) +
+  geom_bar(width = 1, stat = "identity") +
+  coord_polar(theta = "y") +
+  labs(title = "Percentage of commuting times for Non-commuters") +
+  theme_void() + 
+  theme(legend.position = "right") +
+  geom_text(aes(label = label), position = position_stack(vjust = 0.5))
+
 #Checking normality of variables: commuters_gpa and noncommuters_gpa
 commuters_gpa <- data$gpa[data$is_commuter == 1]
 non_commuters_gpa <- data$gpa[data$is_commuter == 0]
@@ -108,13 +166,13 @@ print(wilcox_test_result)
 
 #Anova to test "More time commuting implies lower GPA":
 data$commute_time_group <- as.factor(data$commute_time)  
-data <- filter(data, commute_time > 0) 
-boxplot(gpa ~ commute_time_group, data = data,
+filtered_data <- filter(data, commute_time > 0) 
+boxplot(gpa ~ commute_time_group, data = filtered_data,
             xlab = "Commute Time Group",
             ylab = "GPA",
             main = "GPA by Commute Time Group",
             col = c("skyblue", "lightgreen", "pink"))
-anova_result <- aov(gpa ~ commute_time_group, data = data)
+anova_result <- aov(gpa ~ commute_time_group, data = filtered_data)
 summary(anova_result)
 
 
