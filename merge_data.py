@@ -48,7 +48,7 @@ with open("data/Stats Research Project (Risposte) - English form.csv") as csv_fi
         row.append(map_unis(data[1]))  # university
         row.append(int(data[2].strip().split(" ")[0]))  # age
 
-        commuter = data[3]
+        commuter = 1 if data[3] == "Yes" else 0
         row.append(commuter)
 
         timeScore = (
@@ -83,10 +83,10 @@ with open("data/Stats Research Project (Risposte) - English form.csv") as csv_fi
             gpa = float(data[6].strip().split("/")[0].replace(",", "."))
             row.append(gpa)
         except Exception:
-            row.append("N/A")
+            row.append(-1)
 
         # Part 2 - non commuters
-        moved = data[7]
+        moved = 1 if data[7] == "Yes" else 0
         row.append(moved)
 
         # Part 3 - commuters
@@ -139,7 +139,7 @@ with open("data/Stats Research Project (Risposte) - Italian form.csv") as csv_fi
         row.append(map_unis(data[1]))  # university
         row.append(int(data[2].strip().split(" ")[0]))  # age
 
-        commuter = "Yes" if data[3] == "Si" else "No"
+        commuter = 1 if data[3] == "Si" else 0
         row.append(commuter)
 
         timeScore = (
@@ -174,10 +174,10 @@ with open("data/Stats Research Project (Risposte) - Italian form.csv") as csv_fi
             gpa = float(data[6].strip().split("/")[0].replace(",", "."))
             row.append(gpa)
         except Exception:
-            row.append("N/A")
+            row.append(-1)
 
         # Part 2 - non commuters
-        moved = "Yes" if data[7] == "Si" else "No"
+        moved = 1 if data[7] == "Si" else 0
         row.append(moved)
 
         # Part 3 - commuters

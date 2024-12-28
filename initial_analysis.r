@@ -15,12 +15,12 @@ data.frame(
 
 attach(data)
 
-boxplot(gpa[gpa != -1] ~ is_commuter[gpa != -1],
-    data = data,
-    names = c("non commuter", "commuters"),
-    xlab = "is_commuter",
-    ylab = "gpa"
-)
+# boxplot(gpa[gpa != "N/A"] ~ is_commuter[gpa != "N/A"],
+#     data = data,
+#     names = c("non commuter", "commuters"),
+#     xlab = "is_commuter",
+#     ylab = "gpa"
+# )
 
 # Histograms for GPA (Commuters)
 filtered_commuters <- filter(data, is_commuter == 1 & gpa >= 0 & gpa <= 30)
@@ -153,8 +153,8 @@ ggplot(commute_time_summary, aes(x = "", y = fraction, fill = group)) +
   geom_text(aes(label = label), position = position_stack(vjust = 0.5))
 
 #Checking normality of variables: commuters_gpa and noncommuters_gpa
-commuters_gpa <- data$gpa[data$is_commuter == 1]
-non_commuters_gpa <- data$gpa[data$is_commuter == 0]
+commuters_gpa <- data$gpa[data$is_commuter == 1 & data$gpa != -1]
+non_commuters_gpa <- data$gpa[data$is_commuter == 0 & data$gpa != -1]
 shapiro.test(commuters_gpa)
 shapiro.test(non_commuters_gpa)
 
@@ -166,8 +166,8 @@ print(wilcox_test_result)
 
 #Anova to test "More time commuting implies lower GPA":
 data$commute_time_group <- as.factor(data$commute_time)  
-filtered_data <- filter(data, commute_time > 0) 
-boxplot(gpa ~ commute_time_group, data = filtered_data,
+filtered_data <- filter(data, commute_time > 0 & gpa != -1) 
+boxplot(gpa[gpa != -1] ~ commute_time_group[gpa != -1], data = filtered_data,
             xlab = "Commute Time Group",
             ylab = "GPA",
             main = "GPA by Commute Time Group",

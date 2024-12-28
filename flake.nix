@@ -74,6 +74,9 @@
 
         rWithPkgs = pkgs.rWrapper.override {
           packages = with pkgs.rPackages; [
+            ggplot2
+            dplyr
+
             languageserver
           ];
         };
