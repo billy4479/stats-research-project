@@ -159,7 +159,7 @@ shapiro.test(commuters_gpa)
 shapiro.test(non_commuters_gpa)
 
 #Permorming Wicoxon test since Shapiro test showed the GPA distribution for commuters was not normal
-#Testing the null hypothesis "Commuters do not have a lower GPA than non-commuters":
+#Testing the hypothesis "Commuters have a lower GPA than non-commuters":
 wilcox_test_result <- wilcox.test(commuters_gpa, non_commuters_gpa, 
                                   alternative = "less") 
 print(wilcox_test_result)
@@ -176,3 +176,18 @@ anova_result <- aov(gpa ~ commute_time_group, data = filtered_data)
 summary(anova_result)
 
 
+#Testing the hypothesis "Commuters have a lower mean of life indices":
+selected_columns <- c("no_study_time", "no_hobbies", "stress", "no_sleep", "no_family", "no_friends", "loneliness")
+data$row_mean <- rowMeans(data[, selected_columns], na.rm = TRUE)
+commuters_data <- filter(data, is_commuter == 1)
+non_commuters_data <- filter(data, is_commuter == 0)
+
+#Shapiro-Wilk test for normality of 'row_mean'
+shapiro_commuters <- shapiro.test(commuters_data$row_mean)
+shapiro_non_commuters <- shapiro.test(non_commuters_data$row_mean)
+shapiro_commuters
+shapiro_non_commuters
+#t-test as they're both normally distributed
+t_test_result <- t.test(commuters_data$row_mean, non_commuters_data$row_mean, 
+                        alternative = "less", var.equal = TRUE)
+t_test_result
