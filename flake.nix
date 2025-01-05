@@ -75,6 +75,7 @@
         rWithPkgs = pkgs.rWrapper.override {
           packages = with pkgs.rPackages; [
             ggplot2
+            ggfortify
             dplyr
 
             languageserver
@@ -94,6 +95,7 @@
             texPkgs
             rWithPkgs
             pyPkgs
+            basedpyright
 
             ruff
 

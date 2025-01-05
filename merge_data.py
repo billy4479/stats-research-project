@@ -1,14 +1,14 @@
 import csv
 # from pprint import pp
 
-header = []
-rows_en = []
-rows_it = []
+header: list[str] = []
+rows_en: list[list[str | float]] = []
+rows_it: list[list[str | float]] = []
 
-uni_map = {}
+uni_map: dict[str, int] = {}
 
 
-def map_unis(uni):
+def map_unis(uni: str) -> str:
     uni = uni.strip().lower()
 
     if "bocconi" in uni:
@@ -43,7 +43,7 @@ with open("data/Stats Research Project (Risposte) - English form.csv") as csv_fi
     header = next(reader)
 
     for data in reader:
-        row = []
+        row: list[str | float] = []
         data[0]  # time
         row.append(map_unis(data[1]))  # university
         row.append(int(data[2].strip().split(" ")[0]))  # age
@@ -92,7 +92,7 @@ with open("data/Stats Research Project (Risposte) - English form.csv") as csv_fi
         # Part 3 - commuters
         meanOfTransport = data[8].split(
             ", "
-        )  # TODO: test this because for now we only have non-commuters
+        ) 
         row.append(",".join(meanOfTransport))
 
         thinkCommutingInfluences = int(data[9] or "-8")
@@ -124,6 +124,17 @@ with open("data/Stats Research Project (Risposte) - English form.csv") as csv_fi
         loneliness = int(data[17])
         row.append((loneliness - 1) / 9)
 
+        meansPossible = ["On foot", "Bike", "Bus", "Subway/metro", "Tram", "Train", "Car"]
+        if len(meanOfTransport) == 1 and meanOfTransport[0] == '':
+            meanOfTransport[0] = "On foot"
+
+        for mean in meansPossible:
+            if mean in meanOfTransport:
+                row.append(1)
+            else:
+                row.append(0)
+
+        row.append(len(meanOfTransport))
         for i, v in enumerate(row):
             if type(row[i]) is float:
                 row[i] = round(row[i], ndigits=2)
@@ -131,7 +142,7 @@ with open("data/Stats Research Project (Risposte) - English form.csv") as csv_fi
 
 with open("data/Stats Research Project (Risposte) - Italian form.csv") as csv_file_it:
     reader = csv.reader(csv_file_it)
-    next(reader)
+    _ = next(reader)
 
     for data in reader:
         row = []
@@ -183,7 +194,7 @@ with open("data/Stats Research Project (Risposte) - Italian form.csv") as csv_fi
         # Part 3 - commuters
         meanOfTransport = data[8].split(
             ", "
-        )  # TODO: test this because for now we only have non-commuters
+        )
         row.append(",".join(meanOfTransport))
 
         thinkCommutingInfluences = int(data[9] or "-8")
@@ -215,6 +226,18 @@ with open("data/Stats Research Project (Risposte) - Italian form.csv") as csv_fi
         loneliness = int(data[17])
         row.append((loneliness - 1) / 9)
 
+        meansPossible = ["A piedi", "Bici", "Pullman", "Metro", "Tram", "Treno", "Auto"]
+        if len(meanOfTransport) == 1 and meanOfTransport[0] == '':
+            meanOfTransport.append("A piedi")
+
+        for mean in meansPossible:
+            if mean in meanOfTransport:
+                row.append(1)
+            else:
+                row.append(0)
+
+        row.append(len(meanOfTransport))
+
         for i, v in enumerate(row):
             if type(row[i]) is float:
                 row[i] = round(row[i], ndigits=2)
@@ -242,6 +265,14 @@ with open("data/merged.csv", mode="w+") as result:
         "no_friends",
         "no_family",
         "loneliness",
+        "use_foot",
+        "use_bike",
+        "use_bus",
+        "use_metro",
+        "use_tram",
+        "use_train",
+        "use_car",
+        "n_means_used"
     ]
     writer.writerow(header[1:])
     writer.writerows(rows_en)
