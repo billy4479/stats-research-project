@@ -187,10 +187,10 @@ non_commuters_gpa <- data$gpa[data$is_commuter == 0 & data$gpa != -1]
 shapiro.test(commuters_gpa)
 shapiro.test(non_commuters_gpa)
 
-#Permorming Wicoxon test since Shapiro test showed the GPA distribution for commuters was not normal
+#Permorming Mann-Whitney U test since Shapiro test showed the GPA distribution for commuters was not normal, but its is normal for non-commuters
 #Testing the hypothesis "Commuters have a lower GPA than non-commuters":
 wilcox_test_result <- wilcox.test(commuters_gpa, non_commuters_gpa, 
-                                  alternative = "less") 
+                                  alternative = "less")
 print(wilcox_test_result)
 
 #Anova to test "More time commuting implies lower GPA":
