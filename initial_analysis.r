@@ -69,7 +69,7 @@ filtered_columns <- filtered_data[, c("no_study_time", "no_hobbies", "stress", "
 for (index in colnames(filtered_columns)) {
   xlim_range <- range(filtered_columns[[index]], na.rm = TRUE)
   plot <- ggplot(filtered_columns, aes(x = !!sym(index))) +
-    geom_histogram(bins = 15, alpha = 0.5, fill = "green", color = "black") +
+    geom_histogram(bins = 10, alpha = 0.5, fill = "green", color = "black") +
     geom_density(aes(y = ..density..), color = "red") +
     xlim(xlim_range[1], xlim_range[2]) +
     ggtitle(paste("Histogram of", index, "for Non-commuters")) +
@@ -190,8 +190,8 @@ shapiro.test(non_commuters_gpa)
 # Permorming Wilcoxon rank-sum test since Shapiro test showed the GPA distribution for commuters was not normal
 # Testing the hypothesis "Commuters have a lower GPA than non-commuters":
 wilcox_test_result <- wilcox.test(commuters_gpa, non_commuters_gpa,
-  alternative = "less"
-  exact= FALSE
+  alternative = "less",
+  exact = FALSE
 )
 print(wilcox_test_result)
 
