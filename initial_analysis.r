@@ -191,6 +191,7 @@ shapiro.test(non_commuters_gpa)
 # Testing the hypothesis "Commuters have a lower GPA than non-commuters":
 wilcox_test_result <- wilcox.test(commuters_gpa, non_commuters_gpa,
   alternative = "less"
+  exact= FALSE
 )
 print(wilcox_test_result)
 
