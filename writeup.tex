@@ -95,33 +95,50 @@ The complete data can be found at
 
 \begin{table}[H]
 	\begin{center}
-		\begin{tabular}{|c|c|c|}
+		\begin{tabular}{|c|c|c|c|}
 			\hline
-			\textbf{Variable}                & \textbf{Type}     & \textbf{Description}                                               \\
+			\textbf{n} & \textbf{Variable}                & \textbf{Type}                  & \textbf{Description}                           \\
 			\hline
-			\texttt{university}              & string            & Name of the university attended.                                   \\
-			\texttt{age}                     & integer           & Age.                                                               \\
-			\texttt{is\_commuter}            & boolean           & Considers themselves a commuter.                                   \\
-			\texttt{commute\_time}           & real $\in [0,1]$  & Time taken to go to university. Resolution $5$.                    \\
-			\texttt{attendance}              & real $\in [0,1]$  & Percentage of classes attended. Resolution $4$.                    \\
-			\texttt{gpa}                     & real $\in [0,30]$ & GPA.                                                               \\
-			\texttt{did\_move}               & boolean           & Did move to attend university.                                     \\
-			\texttt{means\_of\_transport}    & list of strings   & List of means of transport used.                                   \\
-			\texttt{cor\_commute\_study}     & real $\in [0,1]$  & \makecell{Expects that commuting influences negatively studies.    \\ Resolution $10$.}                   \\
-			\texttt{no\_study\_time}         & real $\in [0,1]$  & Doesn't have enough time to study. Resolution $10$.                \\
-			\texttt{higher\_gpa\_if\_closer} & real $\in [0,1]$  & \makecell{Thinks they would have a better GPA if they              \\ lived closer to university. Resolution $10$.} \\
-			\texttt{no\_hobbies}             & real $\in [0,1]$  & \makecell{Doesn't have enough time to spend on hobbies and sports. \\ Resolution $10$.} \\
-			\texttt{stress}                  & real $\in [0,1]$  & Going to university is stressful. Resolution $10$.                 \\
-			\texttt{no\_sleep}               & real $\in [0,1]$  & Does not get enough sleep. Resolution $10$.                        \\
-			\texttt{no\_friends}             & real $\in [0,1]$  & Not enough time to see their friends. Resolution $10$.             \\
-			\texttt{no\_family}              & real $\in [0,1]$  & Not enough time to spend with their family. Resolution $10$.       \\
-			\texttt{loneliness}              & real $\in [0,1]$  & Feels lonely. Resolution $10$.                                     \\
+			\hline
+			0          & \texttt{university}              & string                         & Name of the university attended.               \\
+			\hline
+			1          & \texttt{age}                     & integer                        & Age.                                           \\
+			\hline
+			2          & \texttt{is\_commuter}            & boolean                        & Considers themselves a commuter.               \\
+			\hline
+			3          & \texttt{commute\_time}           & integer $\in \{1, \dots, 5\}$  & Time taken to go to university.                \\
+			\hline
+			4          & \texttt{attendance}              & integer $\in \{1, \dots, 4\}$  & Percentage of classes attended.                \\
+			\hline
+			5          & \texttt{gpa}                     & real $\in [0,30]$              & GPA.                                           \\
+			\hline
+			6          & \texttt{did\_move}               & boolean                        & Did move to attend university.                 \\
+			\hline
+			7          & \texttt{means\_of\_transport}    & list of strings                & List of means of transport used.               \\
+			\hline
+			8          & \texttt{cor\_commute\_study}     & integer $\in \{1, \dots, 10\}$ & \makecell{Expects that commuting influences    \\negatively studies.}              \\
+			\hline
+			9          & \texttt{no\_study\_time}         & integer $\in \{1, \dots, 10\}$ & Doesn't have enough time to study.             \\
+			\hline
+			10         & \texttt{higher\_gpa\_if\_closer} & integer $\in \{1, \dots, 10\}$ & \makecell{Thinks they would have a better GPA  \\ if they lived closer to university.} \\
+			\hline
+			11         & \texttt{no\_hobbies}             & integer $\in \{1, \dots, 10\}$ & \makecell{Doesn't have enough time to spend on \\ hobbies and sports.} \\
+			\hline
+			12         & \texttt{stress}                  & integer $\in \{1, \dots, 10\}$ & Going to university is stressful.              \\
+			\hline
+			13         & \texttt{no\_sleep}               & integer $\in \{1, \dots, 10\}$ & Does not get enough sleep.                     \\
+			\hline
+			14         & \texttt{no\_friends}             & integer $\in \{1, \dots, 10\}$ & Not enough time to see their friends.          \\
+			\hline
+			15         & \texttt{no\_family}              & integer $\in \{1, \dots, 10\}$ & \makecell{Not enough time to spend             \\ with their family.}    \\
+			\hline
+			16         & \texttt{loneliness}              & integer $\in \{1, \dots, 10\}$ & Feels lonely.                                  \\
 			\hline
 		\end{tabular}
 		\caption{
-			Data collected through the survey. Some data have a \textit{resolution}:
-			this means that, due to limitations on how we collected data through the survey,
-			there are only a fixed number of values.
+			Data collected through the survey.
+			Integer values have been normalized in order to fint in the interval $[0,1] \in \R$.
+			The data with indices $9$ through $16$ inclusive is what we called Quality of Life Indicators (QLI).
 		}
 	\end{center}
 \end{table}
