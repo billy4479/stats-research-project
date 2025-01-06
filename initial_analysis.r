@@ -19,7 +19,7 @@ attach(data)
 filtered_commuters <- filter(data, is_commuter == 1 & gpa >= 0 & gpa <= 30)
 ggplot(filtered_commuters, aes(x = gpa)) +
   geom_histogram(bins = 12, fill = "purple", color = "black", alpha = 0.7) +
-  geom_density(aes(y = ..density..), color = "red") +
+  geom_density(aes(y = after_stat(density)), color = "red") +
   xlim(18, 30) +
   ggtitle("Histogram of GPA for Commuters") +
   xlab("GPA") +
@@ -31,7 +31,7 @@ ggplot(filtered_commuters, aes(x = gpa)) +
 filtered_non_commuters <- filter(data, is_commuter == 0 & gpa >= 0 & gpa <= 30)
 ggplot(filtered_non_commuters, aes(x = gpa)) +
   geom_histogram(bins = 12, fill = "green", color = "black", alpha = 0.7) +
-  geom_density(aes(y = ..density..), color = "red") +
+  geom_density(aes(y = after_stat(density)), color = "red") +
   xlim(18, 30) +
   ggtitle("Histogram of GPA for Non-commuters") +
   xlab("GPA") +
@@ -197,7 +197,7 @@ print(wilcox_test_result)
 
 # Anova to test "More time commuting implies lower GPA":
 data$commute_time_group <- as.factor(data$commute_time)
-filtered_data <- filter(data, commute_time > 0 & gpa != -1)
+filtered_data <- filter(data, commute_time >= 0 & gpa != -1)
 
 boxplot(gpa[gpa != -1] ~ commute_time_group[gpa != -1],
   data = filtered_data,
