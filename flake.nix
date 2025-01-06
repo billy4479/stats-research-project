@@ -87,6 +87,7 @@
             ggplot2
             ggfortify
             dplyr
+            MASS
 
             languageserver
           ];
