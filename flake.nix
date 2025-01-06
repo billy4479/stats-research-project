@@ -2,12 +2,21 @@
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
+
+    latex-build = {
+      url = "github:billy4479/latex-build";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "flake-utils";
+      };
+    };
   };
 
   outputs =
     {
       nixpkgs,
       flake-utils,
+      latex-build,
       ...
     }:
     flake-utils.lib.eachDefaultSystem (
@@ -56,6 +65,7 @@
             emoji
             doublestroke
             circuitikz
+            makecell
 
             # Indirect dependencies
             environ
@@ -84,9 +94,8 @@
 
         pyPkgs = pkgs.python3.withPackages (
           python-pkgs: with python-pkgs; [
-            # select Python packages here
-            pandas
-            requests
+            # `minted` dependencies
+            pygments
           ]
         );
 
@@ -94,14 +103,9 @@
           (with pkgs; [
             texPkgs
             rWithPkgs
-            pyPkgs
-            basedpyright
-
-            ruff
 
             # `minted` dependencies
-            python3
-            python3Packages.pygments
+            pyPkgs
             which
 
             inkscape # `svg` dependencies
@@ -114,7 +118,14 @@
         OUTDIR = "build"; # This is not optimal as it needs to be changed manually in minted and svg preamble
       in
       {
-        devShells.default = pkgs.mkShell { inherit nativeBuildInputs OSFONTDIR FONTCONFIG_FILE; };
+        devShells.default = pkgs.mkShell {
+          inherit nativeBuildInputs OSFONTDIR FONTCONFIG_FILE;
+          packages = with pkgs; [
+            basedpyright
+            ruff
+            latex-build.packages.${system}.default
+          ];
+        };
         packages = rec {
           document = pkgs.stdenvNoCC.mkDerivation {
             name = "latex-documents";
