@@ -256,7 +256,7 @@ with open("data/merged.csv", mode="w+") as result:
         "gpa",
         "did_move",
         "means_of_transport",
-        "think_commuting_negative_on_studies",
+        "cor_commute_study",
         "no_study_time",
         "higher_gpa_if_closer",
         "no_hobbies",

@@ -1,4 +1,4 @@
-university,age,is_commuter,commute_time,attendance,gpa,did_move,means_of_transport,think_commuting_negative_on_studies,no_study_time,higher_gpa_if_closer,no_hobbies,stress,no_sleep,no_friends,no_family,loneliness,use_foot,use_bike,use_bus,use_metro,use_tram,use_train,use_car,n_means_used
+university,age,is_commuter,commute_time,attendance,gpa,did_move,means_of_transport,cor_commute_study,no_study_time,higher_gpa_if_closer,no_hobbies,stress,no_sleep,no_friends,no_family,loneliness,use_foot,use_bike,use_bus,use_metro,use_tram,use_train,use_car,n_means_used
 bocconi,20,0,0.0,1.0,27.0,1,,-1.0,0.33,0.0,0.11,0.33,0.89,0.33,0.0,0.0,1,0,0,0,0,0,0,1
 bocconi,20,0,0.0,0.67,30.7,1,,-1.0,0.78,0.0,0.78,0.0,1.0,0.67,0.78,0.22,1,0,0,0,0,0,0,1
 bocconi,20,0,0.0,1.0,30.0,1,,-1.0,0.11,0.44,1.0,1.0,0.89,0.56,1.0,0.56,1,0,0,0,0,0,0,1
