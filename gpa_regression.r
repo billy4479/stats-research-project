@@ -5,7 +5,7 @@ library(ggplot2)
 library(ggfortify)
 library(MASS)
 
-outdir <- "rplots"
+outdir <- "routput/gpa_regression"
 dir.create(outdir, showWarnings = FALSE)
 setwd(outdir)
 

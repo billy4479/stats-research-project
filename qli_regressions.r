@@ -7,8 +7,8 @@ library(MASS)
 
 colnames(data)
 
-outdir <- "rplots"
-dir.create(outdir, showWarnings = FALSE)
+outdir <- "routput/qli_regression"
+dir.create(outdir, recursive = TRUE, showWarnings = FALSE)
 setwd(outdir)
 
 sink("r.log", split = TRUE)
@@ -17,9 +17,16 @@ sink("r.log", split = TRUE)
 # | Regression on the QLIs |
 # |------------------------|
 
-data$did_move <- sapply(data$did_move, function(x) max(x, 0))
-
 attach(data)
+data$did_move <- sapply(did_move, function(x) max(x, 0))
+data$use_public_transport <- ifelse(
+  use_bus == 1 |
+    use_metro == 1 |
+    use_tram == 1 |
+    use_train == 1,
+  1, 0
+)
+
 
 qlis <- c(
   "no_study_time", "higher_gpa_if_closer", "no_hobbies", "stress", "no_sleep",
@@ -47,6 +54,7 @@ for (qli in qlis) {
       factor(use_tram) +
       factor(use_train) +
       factor(use_car) +
+      factor(use_public_transport) +
       n_means_used,
     data = data
   )
