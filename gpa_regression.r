@@ -46,7 +46,7 @@ n_coef <- length(coef(full_model))
 n_obs <- nrow(full_model$model)
 
 aicc <- 2 * n_coef / (n_obs - n_coef - 1)
-result <- stepAIC(full_model, direction = "both", k = aicc)
+result <- stepAIC(full_model, direction = "both", k = aicc, trace = 2)
 summary(result)
 anova(result)
 

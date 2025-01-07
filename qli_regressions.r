@@ -36,7 +36,7 @@ for (qli in qlis) {
   full_model <- lm(
     data[[qli]] ~
       commute_time +
-      factor(is_commuter) +
+      # factor(is_commuter) +
       factor(did_move) +
       factor(use_foot) +
       factor(use_bike) +
