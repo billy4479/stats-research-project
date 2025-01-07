@@ -1,4 +1,4 @@
-\documentclass[12pt]{extarticle}
+\documentclass[11pt]{extarticle}
 
 \title{Does commuting affect quality of life?}
 \author{Ellero Giacomo, Porta Beatrice}
@@ -13,6 +13,7 @@
 \usepackage{dirtytalk}
 \usepackage{array}
 \usepackage{makecell}
+\usepackage{subcaption}
 
 % We want numbers on subsections too
 \setcounter{secnumdepth}{3}
@@ -25,6 +26,16 @@
 \usepackage{bm}        % for bold math symbols
 \usepackage{physics}   % for derivatives and lots of operators
 \usepackage{dsfont}    % for \mathds{1}
+
+\usepackage{xcolor}
+\usepackage{cleveref}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=teal,
+    urlcolor=blue,
+}
+\urlstyle{same}
 
 \numberwithin{table}{section}
 \numberwithin{figure}{section}
@@ -49,6 +60,7 @@
 \begin{document}
 
 \maketitle
+%\tableofcontents
 
 \section{Introduction}
 
@@ -71,7 +83,7 @@ However, the benefits of not having to commute are all mere speculations without
 that there’s an actual correlation.
 
 All the data we collected and the scripts we used are available at
-\url{https://github.com/billy4479/stats-research-project}.
+\href{https://github.com/billy4479/stats-research-project}{the following GitHub repository}.
 
 \section{Data collection}
 
@@ -92,8 +104,9 @@ which merged the results from the Italian and English form and expressed the res
 
 The complete data can be found at
 \url{https://github.com/billy4479/stats-research-project/blob/master/data/merged.csv}.
+The final dataframe was organized accordingly to \cref{table:data}.
 
-\begin{table}[H]
+\begin{table}[!ht]
 	\begin{center}
 		\begin{tabular}{|c|c|c|c|}
 			\hline
@@ -141,27 +154,123 @@ The complete data can be found at
 			The data with indices $9$ through $16$ inclusive is what we called Quality of Life Indicators (QLI).
 		}
 	\end{center}
+	\label{table:data}
 \end{table}
 
 \section{Tests}
 
 \section{Regressions}
 
-Note that, as shown in the previous section, the GPA for commuters violates the normality assumption.
-This is probably due to the low number of samples, since all the GPAs combined pass the Shapito-Wilk test.
+\subsection{Assumptions}
 
-Moreover, performing the same test on all the Quality of Life Indicators (QLI for short)
-gives that they are all normally distributed.
+Linear regressions make some assumptions about the data which have to be checked before
+running the model.
+
+\subsubsection{Normality}
+
+First we have to verify that the independent variable follows a normal distribution.
+We performed Shapiro-Wilk test on the GPA and all the QLIs which told us
+with very high confidence that our data is not normally distributed.
+We also made some QQ-plots to confirm graphically the results of the test.
+
+\begin{figure}[!ht]
+	\centering
+	\subcaptionbox{QQ-plot for the \texttt{gpa}}
+	{\includegraphics[width=0.3\textwidth]{./routput/gpa_regression/qqplot_gpa.pdf}}
+	\hspace{1cm}
+	\subcaptionbox{QQ-plot for \texttt{stress}}
+	{\includegraphics[width=0.3\textwidth]{./routput/qli_regression/qqplot_stress.pdf}}
+	\caption{QQ-plot of \texttt{gpa} and \texttt{stress}
+		(taken as an example within the QLIs, other QLIs show a similar behavior).
+	}
+	\label{fig:qq-gpa-stress}
+\end{figure}
+
+As can be seen from the plots in \cref{fig:qq-gpa-stress},
+our data is neither very normal nor very continuous:
+it is clearly possible to see that there were $10$ options available in the QLI survey
+and that most people wrote an integer GPA.
+
+This is probably due to the very small sample size
+and the samples are not \textit{too} far away from the confidence region of the QQ-plot.
+However this is definitely something to keep in mind when
+evaluating the effectiveness of our regressions.
+
+\subsubsection{Correlation}
+\label{sec:correlation}
+
+The next step we took was to verify that our predictors
+were not too correlated with each other as this can negatively impact the performance
+of the regression.
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=0.5\textwidth]{./routput/correlation/correlation.pdf}
+	\caption{Correlation matrix for all the predictors used in the regressions.}
+	\label{fig:corr}
+\end{figure}
+
+As it is possible to see in \cref{fig:corr}, there are some predictors which
+are very correlated with each other.
+From this matrix we can extract the following information:
+\begin{itemize}
+	\item \texttt{commute\_time}, \texttt{is\_commuter} and \texttt{did\_move}
+	      are all very correlated;
+	\item \texttt{is\_commuter} is positively correlated to the use of public transport
+	      and in particular to the use of trains, while negatively to going by foot;
+	\item The use of the metro is positively correlated to
+	      the number of means used and the use of public transport at all.
+\end{itemize}
+
+From these results we decided to exclude \texttt{is\_commuter} and \texttt{did\_move}
+from the regressions as they are too correlated to \texttt{commute\_time},
+which also carries more information than the other two.
+
+\subsubsection{Residuals}
+
+To complete the checks on the assumptions of the linear regressions
+we also checked that the residuals are normally distributed with constant variance.
+
+Both these assumptions where verified for all regressions,
+the first one by using Shapiro-Wilk tests and QQ-plots, the second one using scatter plots (see \cref{fig:residuals}).
+
+\begin{figure}[!ht]
+	\centering
+	\subcaptionbox{QQ-plot for the residuals in the GPA regression.}
+	{\includegraphics[width=0.3\textwidth]{./routput/gpa_regression/qqplot_residuals.pdf}}
+	\hspace{1cm}
+	\subcaptionbox{Scatter plot for residuals in \texttt{no\_sleep} regression.}
+	{\includegraphics[width=0.3\textwidth]{./routput/qli_regression/scatter_residuals_no_sleep.pdf}}
+	\caption{A QQ-plot and a scatter plot of the residuals in two different regressions.
+		These graphs were taken as examples:
+		in other regressions we obtained the same results.}
+	\label{fig:residuals}
+\end{figure}
 
 \subsection{Linear regression on GPA}
 
-First we tried to do a linear regression to try to estimate the GPA based on the predictors we have available.
-We used as predictors
+First we tried to do a linear regression to try to estimate the GPA
+based on the predictors we have available.
+
+We started by using almost all the predictors we had available,
+from there we started removing those predictors that were correlated with each other,
+according to \cref{sec:correlation}, and to reduce the possibility of overfitting
+we also performed a stepwise regression to eliminate predictors in excess.
+
+We ran the stepwise regression both forwards and backwards,
+using the AICc penalty criterion, which is a modified version of AIC with an added penalty term
+for the size of the dataset.
+This was particularly useful since small datasets are more prone to overfitting.
+\begin{equation}
+	{\operatorfont AICc} =
+	\underbrace{2k + 2 \ln (\hat L)}_{\operatorfont AIC}
+	+ \underbrace{\frac {2k^{2}+2k}{n-k-1}}_{\text{extra penalty term}}
+\end{equation}
+
+We algorithm settled at a model containing the following predictors:
 \texttt{commute\_time},
-\texttt{is\_commuter},
-\texttt{did\_move},
-\texttt{no\_study\_time},
 \texttt{higher\_gpa\_if\_closer},
+\texttt{no\_study\_time},
 \texttt{no\_hobbies},
 \texttt{stress},
 \texttt{no\_sleep},
@@ -170,14 +279,22 @@ We used as predictors
 \texttt{loneliness}, and
 \texttt{attendance}.
 
-However, the F-test showed that none of these predictors are relevant at $\alpha_0 = 0.05$.
+Running the linear regression with these predictors gave as result that almost none of them
+are significantly different from $0$, with the exception of
+\texttt{commute\_time} and \texttt{loneliness} which both had a $p$-value of $0.07$.
+The model had a very low $R^2$ of around $0.25$.
 
-TODO: possiamo provare tipo step up/step down/AIC/BIC?
+However, running an analysis of variance on the model showed that both
+\texttt{commute\_time} and \texttt{no\_study\_time} are significant
+at explaining the variance of the model, with both $p$-values $<0.05$.
 
 \subsection{Linear regression on each QLI}
 
 Next we tried to predict each Quality of Life Indicator.
-We used as predictors
+We used the same stepwise algorithm on each indicator we wanted to predict,
+which gave us a moderately size model for the linear regression.
+
+The full model we started from used the following predictors:
 \texttt{commute\_time},
 \texttt{is\_commuter}, and the following variables derived from \texttt{means\_of\_transport}:
 \texttt{did\_move},
@@ -190,7 +307,11 @@ We used as predictors
 \texttt{use\_car}, and
 \texttt{n\_means\_used}.
 
-TODO: finire qui
+Here again all regressions have a very low $R^2$ value, hovering around $0.2$ for all QLIs.
+We will report just the most notable findings between all these regressions:
+\begin{itemize}
+	\item TODO
+\end{itemize}
 
 \section{Conclusion}
 
