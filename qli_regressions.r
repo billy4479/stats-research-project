@@ -14,7 +14,8 @@ setwd(outdir)
 sink("r.log", split = TRUE)
 
 attach(data)
-data$did_move <- sapply(did_move, function(x) max(x, 0)) data$use_public_transport <- ifelse(
+data$did_move <- sapply(did_move, function(x) max(x, 0))
+data$use_public_transport <- ifelse(
   use_bus == 1 |
     use_metro == 1 |
     use_tram == 1 |
@@ -58,12 +59,14 @@ for (qli in qlis) {
   print(summary(result))
   print(anova(result))
 
-  pdf(paste("scatter_residuals", qli, ".pdf", sep = "_"))
-  ggplot(result, aes(x = .fitted, y = .resid)) +
+  pdf(paste("scatter_residuals_", qli, ".pdf", sep = ""))
+  scatter_plot <- ggplot(result, aes(x = .fitted, y = .resid)) +
     geom_point() +
     geom_hline(yintercept = 0, linetype = "dashed") +
     geom_smooth(se = FALSE, color = "red") +
     labs(title = "Residual vs. Fitted Values Plot", x = "Fitted Values", y = "Residuals")
+
+  print(scatter_plot)
 
   test_normality(result, "residuals", paste("residuals", qli, sep = "_"))
 }
