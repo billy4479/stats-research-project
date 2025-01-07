@@ -88,6 +88,8 @@
             ggfortify
             dplyr
             MASS
+            corrplot
+            Hmisc
 
             languageserver
           ];

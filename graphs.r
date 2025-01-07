@@ -14,6 +14,19 @@ total <- length(is_commuter)
 n_non_commuters <- total - n_commuters
 ratio_commuters <- n_commuters / total
 
+# Histograms for GPA (combined)
+pdf("histogram_gpa_combined.pdf")
+filtered_commuters <- filter(data, is_commuter == 1 & gpa >= 0 & gpa <= 30)
+ggplot(filtered_commuters, aes(x = gpa)) +
+  geom_histogram(bins = 12, fill = "purple", color = "black", alpha = 0.7) +
+  geom_density(aes(y = after_stat(density)), color = "red") +
+  xlim(18, 30) +
+  ggtitle("Histogram of GPA combined") +
+  xlab("GPA") +
+  ylab("Frequency") +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5))
+
 # Histograms for GPA (Commuters)
 pdf("histogram_gpa_commuters.pdf")
 filtered_commuters <- filter(data, is_commuter == 1 & gpa >= 0 & gpa <= 30)

@@ -5,7 +5,7 @@ library(ggplot2)
 library(ggfortify)
 library(MASS)
 
-colnames(data)
+source("lib.r")
 
 outdir <- "routput/qli_regression"
 dir.create(outdir, recursive = TRUE, showWarnings = FALSE)
@@ -13,13 +13,8 @@ setwd(outdir)
 
 sink("r.log", split = TRUE)
 
-# |------------------------|
-# | Regression on the QLIs |
-# |------------------------|
-
 attach(data)
-data$did_move <- sapply(did_move, function(x) max(x, 0))
-data$use_public_transport <- ifelse(
+data$did_move <- sapply(did_move, function(x) max(x, 0)) data$use_public_transport <- ifelse(
   use_bus == 1 |
     use_metro == 1 |
     use_tram == 1 |
@@ -27,21 +22,16 @@ data$use_public_transport <- ifelse(
   1, 0
 )
 
-
 qlis <- c(
   "no_study_time", "higher_gpa_if_closer", "no_hobbies", "stress", "no_sleep",
   "no_family", "no_friends", "loneliness"
 )
 
 for (qli in qlis) {
-  print(qli)
-
   # Make sure all QLIs are normally distributed
-  shapiro_pvalue <- shapiro.test(data[[qli]])$p.value
-  if (shapiro_pvalue > 0.05) {
-    print("NOT NORMAL")
-  }
+  test_normality(data, qli)
 
+  print(qli)
   full_model <- lm(
     data[[qli]] ~
       commute_time +
@@ -67,6 +57,13 @@ for (qli in qlis) {
 
   print(summary(result))
   print(anova(result))
-  pdf(paste(qli, ".pdf", sep = ""))
-  print(autoplot(result))
+
+  pdf(paste("scatter_residuals", qli, ".pdf", sep = "_"))
+  ggplot(result, aes(x = .fitted, y = .resid)) +
+    geom_point() +
+    geom_hline(yintercept = 0, linetype = "dashed") +
+    geom_smooth(se = FALSE, color = "red") +
+    labs(title = "Residual vs. Fitted Values Plot", x = "Fitted Values", y = "Residuals")
+
+  test_normality(result, "residuals", paste("residuals", qli, sep = "_"))
 }

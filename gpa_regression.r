@@ -2,18 +2,14 @@ data <- read.csv("./data/merged.csv")
 
 library(dplyr)
 library(ggplot2)
-library(ggfortify)
 library(MASS)
 
+source("lib.r")
 outdir <- "routput/gpa_regression"
 dir.create(outdir, showWarnings = FALSE)
 setwd(outdir)
 
 sink("r.log", split = TRUE)
-
-# |-----------------------|
-# | Regression on the GPA |
-# |-----------------------|
 
 # Some samples have an invalid gpa
 filtered <- data %>% filter(gpa != -1)
@@ -21,20 +17,16 @@ filtered <- data %>% filter(gpa != -1)
 commuters <- filtered %>% filter(is_commuter == 1)
 non_commuters <- filtered %>% filter(is_commuter == 0)
 
-# Non-commuters are not normal. This is probably due to the lack of data.
-shapiro.test(commuters$gpa)
-shapiro.test(non_commuters$gpa)
-
-# The combined data is normal at alpha = 0.05
-shapiro.test(filtered$gpa)
+# The combined data is still not normal
+test_normality(filtered, "gpa")
 
 attach(filtered)
 
 full_model <- lm(
   gpa ~
     commute_time +
-    factor(is_commuter) +
-    factor(did_move) +
+    # factor(is_commuter) +
+    # factor(did_move) +
     no_study_time +
     higher_gpa_if_closer +
     no_hobbies +
@@ -58,5 +50,11 @@ result <- stepAIC(full_model, direction = "both", k = aicc)
 summary(result)
 anova(result)
 
-pdf("gpa.pdf")
-autoplot(result)
+pdf("scatter_residuals.pdf")
+ggplot(result, aes(x = .fitted, y = .resid)) +
+  geom_point() +
+  geom_hline(yintercept = 0, linetype = "dashed") +
+  geom_smooth(se = FALSE, color = "red") +
+  labs(title = "Residual vs. Fitted Values Plot", x = "Fitted Values", y = "Residuals")
+
+test_normality(result, "residuals")
