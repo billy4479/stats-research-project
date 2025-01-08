@@ -82,10 +82,11 @@ Moreover, public transports are often a source of stress, due to delays, strikes
 However, the benefits of not having to commute are all mere speculations without any data to prove
 that there’s an actual correlation.
 
-All the data we collected and the scripts we used are available at
+All the data we collected along with the scripts we used and the source code for this document
+are available at
 \href{https://github.com/billy4479/stats-research-project}{the following GitHub repository}.
 
-\section{Data collection}
+\section{Data collection and dataset}
 
 As we didn't find any existing dataset on this specific topic of research we decided
 to collect our own data through a survey.
@@ -93,71 +94,90 @@ to collect our own data through a survey.
 The survey, both in Italian and in English, was sent to many students all over Italy.
 We managed to collect about $100$ answers, with about $60\%$ of replies being from commuters.
 
-This is probably the greatest limitation of our project:
-the sample is very small and not very diverse, which does not help providing accurate results.
-Moreover, many of the respondents were unable to provide a GPA,
-so that reduced the available data even further.
-
 After collecting the data we passed it through the \texttt{merge\_data.py} script,
 which merged the results from the Italian and English form and expressed the results in a more
 \say{statistic friendly} way.
 
-The complete data can be found at
-\url{https://github.com/billy4479/stats-research-project/blob/master/data/merged.csv}.
+The complete data can be found
+\href{https://github.com/billy4479/stats-research-project/blob/master/data/merged.csv}{here}.
 The final dataframe was organized accordingly to \cref{table:data}.
 
 \begin{table}[!ht]
-	\begin{center}
-		\begin{tabular}{|c|c|c|c|}
-			\hline
-			\textbf{n} & \textbf{Variable}                & \textbf{Type}                  & \textbf{Description}                           \\
-			\hline
-			\hline
-			0          & \texttt{university}              & string                         & Name of the university attended.               \\
-			\hline
-			1          & \texttt{age}                     & integer                        & Age.                                           \\
-			\hline
-			2          & \texttt{is\_commuter}            & boolean                        & Considers themselves a commuter.               \\
-			\hline
-			3          & \texttt{commute\_time}           & integer $\in \{1, \dots, 5\}$  & Time taken to go to university.                \\
-			\hline
-			4          & \texttt{attendance}              & integer $\in \{1, \dots, 4\}$  & Percentage of classes attended.                \\
-			\hline
-			5          & \texttt{gpa}                     & real $\in [0,30]$              & GPA.                                           \\
-			\hline
-			6          & \texttt{did\_move}               & boolean                        & Did move to attend university.                 \\
-			\hline
-			7          & \texttt{means\_of\_transport}    & list of strings                & List of means of transport used.               \\
-			\hline
-			8          & \texttt{cor\_commute\_study}     & integer $\in \{1, \dots, 10\}$ & \makecell{Expects that commuting influences    \\negatively studies.}              \\
-			\hline
-			9          & \texttt{no\_study\_time}         & integer $\in \{1, \dots, 10\}$ & Doesn't have enough time to study.             \\
-			\hline
-			10         & \texttt{higher\_gpa\_if\_closer} & integer $\in \{1, \dots, 10\}$ & \makecell{Thinks they would have a better GPA  \\ if they lived closer to university.} \\
-			\hline
-			11         & \texttt{no\_hobbies}             & integer $\in \{1, \dots, 10\}$ & \makecell{Doesn't have enough time to spend on \\ hobbies and sports.} \\
-			\hline
-			12         & \texttt{stress}                  & integer $\in \{1, \dots, 10\}$ & Going to university is stressful.              \\
-			\hline
-			13         & \texttt{no\_sleep}               & integer $\in \{1, \dots, 10\}$ & Does not get enough sleep.                     \\
-			\hline
-			14         & \texttt{no\_friends}             & integer $\in \{1, \dots, 10\}$ & Not enough time to see their friends.          \\
-			\hline
-			15         & \texttt{no\_family}              & integer $\in \{1, \dots, 10\}$ & \makecell{Not enough time to spend             \\ with their family.}    \\
-			\hline
-			16         & \texttt{loneliness}              & integer $\in \{1, \dots, 10\}$ & Feels lonely.                                  \\
-			\hline
-		\end{tabular}
-		\caption{
-			Data collected through the survey.
-			Integer values have been normalized in order to fint in the interval $[0,1] \in \R$.
-			The data with indices $9$ through $16$ inclusive is what we called Quality of Life Indicators (QLI).
-		}
-	\end{center}
+	\centering
+	\begin{tabular}{|c|c|c|c|}
+		\hline
+		\textbf{n} & \textbf{Variable}                & \textbf{Type}              & \textbf{Description}                                \\
+		\hline
+		0          & \texttt{university}              & string                     & Name of the university attended.                    \\
+		1          & \texttt{age}                     & int                        & Age.                                                \\
+		2          & \texttt{is\_commuter}            & boolean                    & Considers themselves a commuter.                    \\
+		3          & \texttt{commute\_time}           & int $\in \{1, \dots, 5\}$  & Time taken to go to university.                     \\
+		4          & \texttt{attendance}              & int $\in \{1, \dots, 4\}$  & Percentage of classes attended.                     \\
+		5          & \texttt{gpa}                     & real $\in [0,30]$          & GPA.                                                \\
+		6          & \texttt{did\_move}               & boolean                    & Did move to attend university.                      \\
+		7          & \texttt{means\_of\_transport}    & list of strings            & List of means of transport used.                    \\
+		8          & \texttt{cor\_commute\_study}     & int $\in \{1, \dots, 10\}$ & Believes commuting negatively affects studies.      \\
+		9          & \texttt{no\_study\_time}         & int $\in \{1, \dots, 10\}$ & Doesn't have enough time to study.                  \\
+		10         & \texttt{higher\_gpa\_if\_closer} & int $\in \{1, \dots, 10\}$ & Thinks GPA would be higher if closer to university. \\
+		11         & \texttt{no\_hobbies}             & int $\in \{1, \dots, 10\}$ & No time to spend on hobbies and sports.             \\
+		12         & \texttt{stress}                  & int $\in \{1, \dots, 10\}$ & Going to university is stressful.                   \\
+		13         & \texttt{no\_sleep}               & int $\in \{1, \dots, 10\}$ & Does not get enough sleep.                          \\
+		14         & \texttt{no\_friends}             & int $\in \{1, \dots, 10\}$ & Not enough time to see their friends.               \\
+		15         & \texttt{no\_family}              & int $\in \{1, \dots, 10\}$ & Not enough time to spend with their family.         \\
+		16         & \texttt{loneliness}              & int $\in \{1, \dots, 10\}$ & Feels lonely.                                       \\
+		\hline
+	\end{tabular}
+	\caption{
+		Data collected through the survey.
+		Integer values have been normalized in order to fint in the interval $[0,1] \in \R$.
+		The data with indices $9$ through $16$ inclusive is what we called Quality of Life Indicators (QLI).
+	}
 	\label{table:data}
 \end{table}
 
 \section{Tests}
+\label{sec:tests}
+
+In order to test these hypotheses we first performed the Shapiro test to investigate the normality
+of the distributions of the respective GPAs of the two samples, commuters and non-commuters.
+We found that commuters’ GPA did not follow a normal distribution, while non-commuters' GPA
+had a normal distribution.
+
+Each paragrah is titled after the alternate hypotheses we are trying to confirm.
+
+\paragraph{Commuting is correlated to a lower GPA}
+Since we saw that our sample is not normal,
+when testing our first hypothesis we used the nonparametric Mann-Whitney U Test.
+We found a $p$-value of $0.0152$, which indicates that we can reject the null hypothesis because
+there is statistical evidence to support the claim that commuters have a lower GPA than non-commuters.
+
+\paragraph{More time spent commuting is correlated to a lower GPA}
+For the second hypothesis, we performed an ANOVA test
+which tests for differences in means across multiple groups.
+We considered both the commuters and the non-commuters sample.
+The result was a $p$-value of $0.0507$, which indicates that we fail to reject the null hypothesis,
+but also that, since the p-value is very close to the threshold, there could be a marginal effect.
+If a stricter significance level (like $0.01$) was used,
+the result would be considered non-significant.
+
+\paragraph{Commuting is correlated to a lower quality of life}
+For our third hypothesis, we first computed the total mean of the QLIs of commuters and
+then investigated the normality of this mean with the Shapiro tests.
+We found that the mean follows a normal distribution and therefore we proceeded with a t-test.
+The result was a $p$-value of $0.8765$, so we fail to reject the null hypothesis.
+This means that there is no significant evidence to suggest that the mean of commuters' QLIs
+is less than that of non-commuters.
+We also found that the two means of the two groups are very close to each other
+($0.5171$ vs $0.4692$), which further suggests no meaningful difference.
+
+\paragraph{Commuting using public transport is correlated to a lower quality of life}
+For our fourth hypothesis, sadly we couldn’t conclude anything.
+We first separated the dataset in two groups based on the means of transport,
+namely private or public ones, but when performing the Shapiro test to investigate the normality
+of the distribution of these two groups we encountered an error:
+the sample for the private group was too small to check normality.
+Therefore, we stopped and the question remains open.
+
 
 \section{Regressions}
 
@@ -232,20 +252,21 @@ To complete the checks on the assumptions of the linear regressions
 we also checked that the residuals are normally distributed with constant variance.
 
 Both these assumptions where verified for all regressions,
-the first one by using Shapiro-Wilk tests and QQ-plots, the second one using scatter plots (see \cref{fig:residuals}).
+the first one by using Shapiro-Wilk tests and QQ-plots, the second one using scatter plots.
+%(see \cref{fig:residuals}).
 
-\begin{figure}[!ht]
-	\centering
-	\subcaptionbox{QQ-plot for the residuals in the GPA regression.}
-	{\includegraphics[width=0.3\textwidth]{./routput/gpa_regression/qqplot_residuals.pdf}}
-	\hspace{1cm}
-	\subcaptionbox{Scatter plot for residuals in \texttt{no\_sleep} regression.}
-	{\includegraphics[width=0.3\textwidth]{./routput/qli_regression/scatter_residuals_no_sleep.pdf}}
-	\caption{A QQ-plot and a scatter plot of the residuals in two different regressions.
-		These graphs were taken as examples:
-		in other regressions we obtained the same results.}
-	\label{fig:residuals}
-\end{figure}
+%\begin{figure}[!ht]
+%	\centering
+%	\subcaptionbox{QQ-plot for the residuals in the GPA regression.}
+%	{\includegraphics[width=0.3\textwidth]{./routput/gpa_regression/qqplot_residuals.pdf}}
+%	\hspace{1cm}
+%	\subcaptionbox{Scatter plot for residuals in \texttt{no\_sleep} regression.}
+%	{\includegraphics[width=0.3\textwidth]{./routput/qli_regression/scatter_residuals_no_sleep.pdf}}
+%	\caption{A QQ-plot and a scatter plot of the residuals in two different regressions.
+%		These graphs were taken as examples:
+%		in other regressions we obtained the same results.}
+%	\label{fig:residuals}
+%\end{figure}
 
 \subsection{Linear regression on GPA}
 
@@ -313,6 +334,50 @@ We will report just the most notable findings between all these regressions:
 	\item TODO
 \end{itemize}
 
-\section{Conclusion}
+\section{Conclusion, further questions and limitations}
+
+Our tests and linear regressions showed that there’s indeed a correlation between GPA and commuting,
+in particular commuting results in a lower GPA.
+On the other hand, we found that the quality of life is not correlated with commuting,
+meaning that both commuters and non-commuters face the same difficulties and
+that this aspect is not relevant to the overall environment in which one lives and
+how he feels on a daily basis.
+
+We can justify the first result by thinking that since commuters spend a larger time on
+means on transport, they have to subtract this time from their \say{study time},
+since studying while travelling is often not possible due to a noisy environment,
+discomfort and even if possible would probably not result in a very high level quality of study
+(but this should be further researched).
+Moreover, after arriving home from a long travel many students feel too tired in order to focus
+and proficiently study at home.
+This could lead to a more in depth study on the effects of commuting,
+namely on how travelling impacts concentration and energy drainage.
+
+For the second result, this could be due to the fact that while commuters may feel stressed
+because of the uncomfortable means of transport, strikes and unforeseen problems they may face,
+non-commuters often had to relocate to the city in which they study,
+which means leaving behind their family and friends.
+This means they often feel lonely and nostalgic, but also that they need to invest time
+to take care of their house and other business which may result in high stress levels.
+
+We faced, in our study, many limitations, the first of all being that we dealt with
+a very limited dataset, and also disproportionate, since over half of the participants
+of our survey were commuters.
+It would be ideal to replicate our study on a larger scale which involves an equal part
+of commuters and non-commuters.
+
+The second limitation we faced was when dealing with our fourth hypothesis (see \cref{sec:tests}):
+we couldn’t proceed due to too few data points for the private transport group,
+which implied not being able to check normality and proceed with a test.
+Again, with a broader dataset we should have been able to arrive to a result.
+
+There are more questions that could be answered: one could be how GPA impacts a student’s life.
+For example, a higher GPA could either result in a happy student or a very stressed student,
+who had to sacrifice their private life in order to achieve the academic result.
+Another question could be the reverse, namely if having a stressful life result in a lower GPA.
+
+We didn’t investigate these questions because out of the scope of our research,
+but we believe that they could lead to interesting result and spark a very important conversation
+on student’s mental health and how school affects it.
 
 \end{document}
