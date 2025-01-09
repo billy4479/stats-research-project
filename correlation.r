@@ -1,6 +1,5 @@
 library(dplyr)
-library(corrplot)
-library(Hmisc)
+library(ggcorrplot)
 
 data <- read.csv("./data/merged.csv")
 
@@ -49,11 +48,17 @@ selected_columns <- c(
   "n_means_used"
 )
 
-correlation_matrix <- cor(filtered[selected_columns])
-pdf("correlation.pdf", width = 13, height = 13)
-corrplot(correlation_matrix,
-  method = "number"
-  # diag = FALSE
-)
 
-rcorr(as.matrix(filtered[selected_columns]))
+pdf("correlation.pdf", width = 13, height = 13)
+corr <- cor(filtered[selected_columns])
+p.mat <- cor_pmat(filtered[selected_columns])
+
+ggcorrplot(
+  corr,
+  hc.order = TRUE,
+  lab = TRUE,
+  p.mat = p.mat,
+  sig.level = 0.05,
+  insig = "blank",
+  ggtheme = ggplot2::theme_classic()
+) + ggtitle("Correlation heatmap")

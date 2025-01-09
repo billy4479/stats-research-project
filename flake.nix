@@ -85,11 +85,9 @@
         rWithPkgs = pkgs.rWrapper.override {
           packages = with pkgs.rPackages; [
             ggplot2
-            ggfortify
+            ggcorrplot
             dplyr
             MASS
-            corrplot
-            Hmisc
 
             languageserver
           ];
