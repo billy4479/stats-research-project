@@ -2,7 +2,7 @@ data <- read.csv("data/merged.csv")
 
 library(dplyr)
 
-outdir <- "routput/initial_analysis"
+outdir <- "routput/tests"
 dir.create(outdir, recursive = TRUE, showWarnings = FALSE)
 setwd(outdir)
 

@@ -57,9 +57,14 @@ ggplot(filtered_non_commuters, aes(x = gpa)) +
 pdf("boxplot_gpa_vs_is_commuter.pdf")
 boxplot(gpa[gpa != -1] ~ is_commuter[gpa != -1],
   data = data,
-  names = c("non commuter", "commuters"),
-  xlab = "is_commuter",
-  ylab = "gpa"
+  names = c("Non commuter", "Commuters"),
+  xlab = "Is commuter",
+  ylab = "GPA",
+  main = "GPA vs Is Commuter",
+  col = scales::alpha(
+    c("#D8BFD8", "#8A2BE2"),
+    alpha = 0.7
+  )
 )
 
 # Histogram for mean indices of life quality (Commuters)
@@ -106,9 +111,14 @@ result <- data[, c(selected_columns, "row_mean")]
 pdf("boxplot_mean_qli_vs_is_commuter.pdf")
 boxplot(row_mean ~ is_commuter,
   data = data[!is.na(data$row_mean), ],
-  names = c("non commuter", "commuters"),
-  xlab = "is_commuter",
-  ylab = "gpa"
+  names = c("Non commuter", "Commuters"),
+  xlab = "Is Commuter",
+  ylab = "Mean QLIs",
+  main = "Mean QLIs by Is Commuter",
+  col = scales::alpha(
+    c("#D8BFD8", "#8A2BE2"),
+    alpha = 0.7
+  )
 )
 
 # Pie charts

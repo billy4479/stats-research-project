@@ -1,8 +1,8 @@
 \documentclass[11pt]{extarticle}
 
-\title{Does commuting affect quality of life?}
+\title{\vspace{-1.5cm}Does commuting affect quality of life?\vspace{-0.5cm}}
 \author{Ellero Giacomo, Porta Beatrice}
-\date{a.y. 2024/2025}
+\date{}
 
 \usepackage{parskip} % for no indentation
 \usepackage[a4paper,margin=1.5cm]{geometry} % to adjust margins
@@ -60,6 +60,7 @@
 \begin{document}
 
 \maketitle
+\vspace{-1cm}
 %\tableofcontents
 
 \section{Introduction}
@@ -78,7 +79,6 @@ to their well-being and also academic performance.
 The intuition we had is that the time spent commuting could be better invested in studying
 or doing other activities more beneficial to the overall well-being.
 Moreover, public transports are often a source of stress, due to delays, strikes and discomfort.
-
 However, the benefits of not having to commute are all mere speculations without any data to prove
 that there’s an actual correlation.
 
@@ -90,14 +90,12 @@ are available at
 
 As we didn't find any existing dataset on this specific topic of research we decided
 to collect our own data through a survey.
-
 The survey, both in Italian and in English, was sent to many students all over Italy.
 We managed to collect about $100$ answers, with about $60\%$ of replies being from commuters.
 
 After collecting the data we passed it through the \texttt{merge\_data.py} script,
 which merged the results from the Italian and English form and expressed the results in a more
 \say{statistic friendly} way.
-
 The complete data can be found
 \href{https://github.com/billy4479/stats-research-project/blob/master/data/merged.csv}{here}.
 The final dataframe was organized accordingly to \cref{table:data}.
@@ -108,23 +106,23 @@ The final dataframe was organized accordingly to \cref{table:data}.
 		\hline
 		\textbf{n} & \textbf{Variable}                & \textbf{Type}              & \textbf{Description}                                \\
 		\hline
-		0          & \texttt{university}              & string                     & Name of the university attended.                    \\
-		1          & \texttt{age}                     & int                        & Age.                                                \\
-		2          & \texttt{is\_commuter}            & boolean                    & Considers themselves a commuter.                    \\
-		3          & \texttt{commute\_time}           & int $\in \{1, \dots, 5\}$  & Time taken to go to university.                     \\
-		4          & \texttt{attendance}              & int $\in \{1, \dots, 4\}$  & Percentage of classes attended.                     \\
-		5          & \texttt{gpa}                     & real $\in [0,30]$          & GPA.                                                \\
-		6          & \texttt{did\_move}               & boolean                    & Did move to attend university.                      \\
-		7          & \texttt{means\_of\_transport}    & list of strings            & List of means of transport used.                    \\
-		8          & \texttt{cor\_commute\_study}     & int $\in \{1, \dots, 10\}$ & Believes commuting negatively affects studies.      \\
-		9          & \texttt{no\_study\_time}         & int $\in \{1, \dots, 10\}$ & Doesn't have enough time to study.                  \\
-		10         & \texttt{higher\_gpa\_if\_closer} & int $\in \{1, \dots, 10\}$ & Thinks GPA would be higher if closer to university. \\
-		11         & \texttt{no\_hobbies}             & int $\in \{1, \dots, 10\}$ & No time to spend on hobbies and sports.             \\
-		12         & \texttt{stress}                  & int $\in \{1, \dots, 10\}$ & Going to university is stressful.                   \\
-		13         & \texttt{no\_sleep}               & int $\in \{1, \dots, 10\}$ & Does not get enough sleep.                          \\
-		14         & \texttt{no\_friends}             & int $\in \{1, \dots, 10\}$ & Not enough time to see their friends.               \\
-		15         & \texttt{no\_family}              & int $\in \{1, \dots, 10\}$ & Not enough time to spend with their family.         \\
-		16         & \texttt{loneliness}              & int $\in \{1, \dots, 10\}$ & Feels lonely.                                       \\
+		1          & \texttt{university}              & string                     & Name of the university attended.                    \\
+		2          & \texttt{age}                     & int                        & Age.                                                \\
+		3          & \texttt{is\_commuter}            & boolean                    & Considers themselves a commuter.                    \\
+		4          & \texttt{commute\_time}           & int $\in \{1, \dots, 5\}$  & Time taken to go to university.                     \\
+		5          & \texttt{attendance}              & int $\in \{1, \dots, 4\}$  & Percentage of classes attended.                     \\
+		6          & \texttt{gpa}                     & real $\in [0,30]$          & GPA.                                                \\
+		7          & \texttt{did\_move}               & boolean                    & Did move to attend university.                      \\
+		8          & \texttt{means\_of\_transport}    & list of strings            & List of means of transport used.                    \\
+		9          & \texttt{cor\_commute\_study}     & int $\in \{1, \dots, 10\}$ & Believes commuting negatively affects studies.      \\
+		10         & \texttt{no\_study\_time}         & int $\in \{1, \dots, 10\}$ & Doesn't have enough time to study.                  \\
+		11         & \texttt{higher\_gpa\_if\_closer} & int $\in \{1, \dots, 10\}$ & Thinks GPA would be higher if closer to university. \\
+		12         & \texttt{no\_hobbies}             & int $\in \{1, \dots, 10\}$ & No time to spend on hobbies and sports.             \\
+		13         & \texttt{stress}                  & int $\in \{1, \dots, 10\}$ & Going to university is stressful.                   \\
+		14         & \texttt{no\_sleep}               & int $\in \{1, \dots, 10\}$ & Does not get enough sleep.                          \\
+		15         & \texttt{no\_friends}             & int $\in \{1, \dots, 10\}$ & Not enough time to see their friends.               \\
+		16         & \texttt{no\_family}              & int $\in \{1, \dots, 10\}$ & Not enough time to spend with their family.         \\
+		17         & \texttt{loneliness}              & int $\in \{1, \dots, 10\}$ & Feels lonely.                                       \\
 		\hline
 	\end{tabular}
 	\caption{
@@ -140,10 +138,10 @@ The final dataframe was organized accordingly to \cref{table:data}.
 
 In order to test these hypotheses we first performed the Shapiro test to investigate the normality
 of the distributions of the respective GPAs of the two samples, commuters and non-commuters.
-We found that commuters’ GPA did not follow a normal distribution, while non-commuters' GPA
+We found that commuters' GPA did not follow a normal distribution, while non-commuters' GPA
 had a normal distribution.
 
-Each paragrah is titled after the alternate hypotheses we are trying to confirm.
+Each paragraph is titled after the alternate hypotheses we are trying to confirm.
 
 \paragraph{Commuting is correlated to a lower GPA}
 Since we saw that our sample is not normal,
@@ -178,6 +176,16 @@ of the distribution of these two groups we encountered an error:
 the sample for the private group was too small to check normality.
 Therefore, we stopped and the question remains open.
 
+\begin{figure}[!ht]
+	\centering
+	\subcaptionbox{GPA vs commute time.}
+	{\includegraphics[width=0.3\textwidth]{./routput/graphs/boxplot_gpa_vs_commute_time.pdf}}
+	\subcaptionbox{GPA vs is commuter.}
+	{\includegraphics[width=0.3\textwidth]{./routput/graphs/boxplot_gpa_vs_is_commuter.pdf}}
+	\subcaptionbox{Mean of QLIs vs is commuter.}
+	{\includegraphics[width=0.3\textwidth]{./routput/graphs/boxplot_mean_qli_vs_is_commuter.pdf}}
+	\caption{Some boxplots of our data.}
+\end{figure}
 
 \section{Regressions}
 
@@ -186,8 +194,7 @@ Therefore, we stopped and the question remains open.
 Linear regressions make some assumptions about the data which have to be checked before
 running the model.
 
-\subsubsection{Normality}
-
+\paragraph{Normality}
 First we have to verify that the independent variable follows a normal distribution.
 We performed Shapiro-Wilk test on the GPA and all the QLIs which told us
 with very high confidence that our data is not normally distributed.
@@ -201,7 +208,7 @@ We also made some QQ-plots to confirm graphically the results of the test.
 	\subcaptionbox{QQ-plot for \texttt{stress}}
 	{\includegraphics[width=0.3\textwidth]{./routput/qli_regression/qqplot_stress.pdf}}
 	\caption{QQ-plot of \texttt{gpa} and \texttt{stress}
-		(taken as an example within the QLIs, other QLIs show a similar behavior).
+		(taken as an example, other QLIs show a similar behavior).
 	}
 	\label{fig:qq-gpa-stress}
 \end{figure}
@@ -216,9 +223,7 @@ and the samples are not \textit{too} far away from the confidence region of the 
 However this is definitely something to keep in mind when
 evaluating the effectiveness of our regressions.
 
-\subsubsection{Correlation}
-\label{sec:correlation}
-
+\paragraph{Correlation}
 The next step we took was to verify that our predictors
 were not too correlated with each other as this can negatively impact the performance
 of the regression.
@@ -226,7 +231,10 @@ of the regression.
 \begin{figure}[!ht]
 	\centering
 	\includegraphics[width=0.5\textwidth]{./routput/correlation/correlation.pdf}
-	\caption{Correlation matrix for all the predictors used in the regressions.}
+	\caption{
+		Correlation matrix for all the predictors used in regressions.
+		Empty cells represent correlation not significant at level $0.05$.
+	}
 	\label{fig:corr}
 \end{figure}
 
@@ -246,8 +254,7 @@ From these results we decided to exclude \texttt{is\_commuter} and \texttt{did\_
 from the regressions as they are too correlated to \texttt{commute\_time},
 which also carries more information than the other two.
 
-\subsubsection{Residuals}
-
+\paragraph{Residuals}
 To complete the checks on the assumptions of the linear regressions
 we also checked that the residuals are normally distributed with constant variance.
 
@@ -275,7 +282,7 @@ based on the predictors we have available.
 
 We started by using almost all the predictors we had available,
 from there we started removing those predictors that were correlated with each other,
-according to \cref{sec:correlation}, and to reduce the possibility of overfitting
+according to \cref{fig:corr}, and to reduce the possibility of overfitting
 we also performed a stepwise regression to eliminate predictors in excess.
 
 We ran the stepwise regression both forwards and backwards,
@@ -303,7 +310,7 @@ We algorithm settled at a model containing the following predictors:
 Running the linear regression with these predictors gave as result that almost none of them
 are significantly different from $0$, with the exception of
 \texttt{commute\_time} and \texttt{loneliness} which both had a $p$-value of $0.07$.
-The model had a very low $R^2$ of around $0.25$.
+The model had a very low adjusted $R^2$ around $0.15$.
 
 However, running an analysis of variance on the model showed that both
 \texttt{commute\_time} and \texttt{no\_study\_time} are significant
@@ -314,7 +321,6 @@ at explaining the variance of the model, with both $p$-values $<0.05$.
 Next we tried to predict each Quality of Life Indicator.
 We used the same stepwise algorithm on each indicator we wanted to predict,
 which gave us a moderately size model for the linear regression.
-
 The full model we started from used the following predictors:
 \texttt{commute\_time},
 \texttt{is\_commuter}, and the following variables derived from \texttt{means\_of\_transport}:
@@ -328,30 +334,59 @@ The full model we started from used the following predictors:
 \texttt{use\_car}, and
 \texttt{n\_means\_used}.
 
-Here again all regressions have a very low $R^2$ value, hovering around $0.2$ for all QLIs.
-We will report just the most notable findings between all these regressions:
-\begin{itemize}
-	\item TODO
-\end{itemize}
+Here again all regressions have a very low adjusted $R^2$ value, hovering around $0.1$ for all QLIs.
+We will report just the most notable findings between all these regressions.
 
-\section{Conclusion, further questions and limitations}
+\paragraph{Stress}
+This is the regression that gave best results:
+we got that
+\texttt{commute\_time},
+\texttt{use\_public\_transport},
+\texttt{n\_means\_used}
+are all significant at level $0.05$ with positive coefficients,
+while \texttt{use\_car} is also significant but with negative coefficient.
 
-Our tests and linear regressions showed that there’s indeed a correlation between GPA and commuting,
+\paragraph{Higher GPA if closer}
+The linear regression told us that none of our predictors had coefficients
+significantly different from $0$, however, running ANOVA gave that with
+very high confidence ($p$-value $= 0.0009$) that \texttt{commute\_time}
+causes variance in the result, which sadly was not encapsulated in our linear model.
+
+\paragraph{No sleep}
+In this regression we found that the intercept is very significant,
+hence lack of sleep is a common problem among all students.
+Moreover, \texttt{use\_train} was also significant with $p$-value of $0.00018$
+and positive coefficient, which makes sense as trains usually have a
+lower frequency compared to other means of transport and it is often required
+to wake up very early in order to catch the right one.
+
+\paragraph{Other QLIs}
+In other regressions we got very bad $R^2$ values and none of our predictors
+were found significant.
+In some cases ANOVA revealed that some predictors such as \texttt{commute\_time}
+are the cause for variance in the result, but the linear regressions were not able
+to model it.
+
+\section{Conclusions, limitations and further questions}
+
+\paragraph{Conclusions}
+Our tests showed that there is a correlation between GPA and commuting,
 in particular commuting results in a lower GPA.
-On the other hand, we found that the quality of life is not correlated with commuting,
-meaning that both commuters and non-commuters face the same difficulties and
-that this aspect is not relevant to the overall environment in which one lives and
-how he feels on a daily basis.
+However, this was very hard to model into a linear regression, giving models with very low
+predictive power.
+For QLIs tests showed no significant difference between commuters and non commuters.
+This is also reflected in the linear regressions: they all have incredibly low predictive power
+and almost none of our predictors were significant.
 
 We can justify the first result by thinking that since commuters spend a larger time on
 means on transport, they have to subtract this time from their \say{study time},
-since studying while travelling is often not possible due to a noisy environment,
+since studying while traveling is often not possible due to a noisy environment,
 discomfort and even if possible would probably not result in a very high level quality of study
 (but this should be further researched).
 Moreover, after arriving home from a long travel many students feel too tired in order to focus
 and proficiently study at home.
 This could lead to a more in depth study on the effects of commuting,
-namely on how travelling impacts concentration and energy drainage.
+namely on how traveling impacts concentration and energy drainage.
 
 For the second result, this could be due to the fact that while commuters may feel stressed
 because of the uncomfortable means of transport, strikes and unforeseen problems they may face,
@@ -360,17 +395,23 @@ which means leaving behind their family and friends.
 This means they often feel lonely and nostalgic, but also that they need to invest time
 to take care of their house and other business which may result in high stress levels.
 
+\paragraph{Limitations}
 We faced, in our study, many limitations, the first of all being that we dealt with
-a very limited dataset, and also disproportionate, since over half of the participants
-of our survey were commuters.
+a very limited dataset.
+This resulted in our data not being enough to conclude some tests and
+probably also worsened the results of our regressions.
+
+Moreover, our dataset was also disproportionate: over half of the participants
+of our survey were commuters and our sample was mostly from students living near Milan,
+which is also quite restrictive.
 It would be ideal to replicate our study on a larger scale which involves an equal part
-of commuters and non-commuters.
+of commuters and non-commuters from a larger region.
 
-The second limitation we faced was when dealing with our fourth hypothesis (see \cref{sec:tests}):
-we couldn’t proceed due to too few data points for the private transport group,
-which implied not being able to check normality and proceed with a test.
-Again, with a broader dataset we should have been able to arrive to a result.
+Moreover, our survey also had very limited resolution on the \texttt{commute\_time} variable:
+in the survey people had just $4$ options to select from; looking back at it, it would have been
+much better to ask for the commute time in minutes as this was the main predictor for our study.
 
+\paragraph{Further questions}
 There are more questions that could be answered: one could be how GPA impacts a student’s life.
 For example, a higher GPA could either result in a happy student or a very stressed student,
 who had to sacrifice their private life in order to achieve the academic result.
