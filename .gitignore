@@ -1,6 +1,7 @@
 /.direnv
 /build
 /routput
+/indent.log
 
 *.pdf
 
