@@ -4,7 +4,7 @@ library(ggcorrplot)
 data <- read.csv("./data/merged.csv")
 
 outdir <- "routput/correlation"
-dir.create(outdir, showWarnings = FALSE)
+dir.create(outdir, showWarnings = FALSE, recursive = TRUE)
 setwd(outdir)
 
 sink("r.log", split = TRUE)

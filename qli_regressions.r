@@ -2,7 +2,6 @@ data <- read.csv("./data/merged.csv")
 
 library(dplyr)
 library(ggplot2)
-library(ggfortify)
 library(MASS)
 
 source("lib.r")
