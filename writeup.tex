@@ -95,13 +95,14 @@ We managed to collect about $100$ answers, with about $60\%$ of replies being fr
 
 After collecting the data we passed it through the \texttt{merge\_data.py} script,
 which merged the results from the Italian and English form and expressed the results in a more
-\say{statistic friendly} way.
-The complete data can be found
+\say{statistic friendly} way:
+the resulting \texttt{csv} file containing all the data can be found
 \href{https://github.com/billy4479/stats-research-project/blob/master/data/merged.csv}{here}.
 The final dataframe was organized accordingly to \cref{table:data}.
 
 \begin{table}[!ht]
 	\centering
+	\tiny
 	\begin{tabular}{|c|c|c|c|}
 		\hline
 		\textbf{n} & \textbf{Variable}                & \textbf{Type}              & \textbf{Description}                                \\
@@ -132,6 +133,16 @@ The final dataframe was organized accordingly to \cref{table:data}.
 	}
 	\label{table:data}
 \end{table}
+\begin{figure}[!ht]
+	\centering
+	\subcaptionbox{Commute time for commuters.}
+	{\includegraphics[width=0.3\textwidth]{./routput/graphs/pie_commute_time_commuters.pdf}}
+	\subcaptionbox{Commute time for non-commuters.}
+	{\includegraphics[width=0.3\textwidth]{./routput/graphs/pie_commute_time_noncommuters.pdf}}
+	\subcaptionbox{Histogram of GPA.}
+	{\includegraphics[width=0.3\textwidth]{./routput/graphs/histogram_gpa_combined.pdf}}
+	\caption{Some graphs to summarize our data.}
+\end{figure}
 
 \section{Tests}
 \label{sec:tests}
@@ -240,16 +251,6 @@ of the regression.
 
 As it is possible to see in \cref{fig:corr}, there are some predictors which
 are very correlated with each other.
-From this matrix we can extract the following information:
-\begin{itemize}
-	\item \texttt{commute\_time}, \texttt{is\_commuter} and \texttt{did\_move}
-	      are all very correlated;
-	\item \texttt{is\_commuter} is positively correlated to the use of public transport
-	      and in particular to the use of trains, while negatively to going by foot;
-	\item The use of the metro is positively correlated to
-	      the number of means used and the use of public transport at all.
-\end{itemize}
-
 From these results we decided to exclude \texttt{is\_commuter} and \texttt{did\_move}
 from the regressions as they are too correlated to \texttt{commute\_time},
 which also carries more information than the other two.
